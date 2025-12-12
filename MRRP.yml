@@ -1,4 +1,4 @@
-name: MuMo
+name: MRRP
 channels:
   - pytorch
   - nvidia
