@@ -78,7 +78,7 @@ def get_backbone_opts(parser):
     group.add_argument('--base-extractor', default='espnetv2', help='Which CNN model? Default is espnetv2')
     group.add_argument('--s', type=float, default=2.0,
                        help='Factor by which channels will be scaled. Default is 2.0 for espnetv2')
-    group.add_argument('--weights', type=str, default='model/model_zoo/espnetv2/espnetv2_s_2.0_imagenet_224x224.pth',
+    group.add_argument('--weights', type=str, default='',
                        help='Location of imagenet pretrained weights')
     group.add_argument('--num_classes', type=int, default=1000, help='Number of classes in the base feature extractor.'
                                                                      ' Default is 1000 for the ImageNet pretrained model')

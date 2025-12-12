@@ -69,21 +69,18 @@ def build_data_loader(opts, printer=print):
 def get_dataset_opts(parser):
     group = parser.add_argument_group('Dataset general details')
     group.add_argument('--dataset', type=str, default='breast', help='Dataset name')
-    group.add_argument('--split-file', type=str, default="/home/lh/Ours/data/breast/5_fold")
+    group.add_argument('--split-file', type=str, default="")
     group.add_argument('--bootstrap-train',action='store_true',default=False,help="Conduct bootstrap training")
 
-    # group.add_argument('--bl-img-dir', type=str, default='/public/share/chenzifan/Journal22-GuoZhong/GuoZhongBingLiData/', help='Dataset location')
-    group.add_argument('--bl-bag-feat-dir',type=str, default="/9_data/wxy/breast/slide_embedding/slide_embeddings_topological_titan.pt",
-                       help='directory of bag features') # /9_data/ljj/TITAN_1/Comparative_experiment_TitanAndTian/slideEmbedding/slide_embeddings.pt
-    group.add_argument('--bl-rad-file', type=str, default='/9_data/wxy/breast/slide_embedding/slide_embeddings_hovernet_morphological_titan.pt', help='radiomics feature file')
-    # /home/lh/Ours/data/breast/wsi_omics_features_filterd.csv
-    group.add_argument('--bl-clin-file', type=str, default='/9_data/wxy/breast/slide_embedding/slides_embedding_conch_titan.pt', help='BL_clinical_report feature file')
+    group.add_argument('--bl-bag-feat-dir',type=str, default="",
+                       help='directory of bag features') 
+    group.add_argument('--bl-rad-file', type=str, default='', help='radiomics feature file')
+    group.add_argument('--bl-clin-file', type=str, default='', help='BL_clinical_report feature file')
     group.add_argument('--bl-num-bags', type=int, default=1, help='Number of bags for running')
 
-    # group.add_argument('--yx-img-dir', type=str, default='/public/share/chenzifan/Journal22-GuoZhong/YingXiangCropData/', help='Dataset location')
-    group.add_argument('--yx-img-feat-dir',type=str, default='/9_data/ljf/us_wsi/image/us_wsi/feature',help='directory of image features')
-    group.add_argument('--yx-rad-file', type=str, default='/home/lh/Ours/data/breast/us_radiomics_features_filterd.csv', help='directory of US radiomics features')
-    group.add_argument('--yx-clin-file', type=str, default='/9_data/wxy/results/MUMO/conch_US_report_features.pt', help='YX_clinical_report feature file')
+    group.add_argument('--yx-img-feat-dir',type=str, default='',help='directory of image features')
+    group.add_argument('--yx-rad-file', type=str, default='', help='directory of US radiomics features')
+    group.add_argument('--yx-clin-file', type=str, default='', help='YX_clinical_report feature file')
     group.add_argument('--yx-num-lesions', type=int, default=1, help='Number of lesions for running')
     
     group.add_argument('--batch-size', type=int, default=32, help='Batch size')
