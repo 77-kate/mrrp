@@ -7,6 +7,6 @@ If you use this code, please cite the paper using the bibtex reference below.
 A conda environment file is provided in mrrp.yml. It can be installed by using conda as follows
 
 ```
-conda env create -f lidfl.yml
+conda env create -f mrrp.yml
 ```
 Installing PyTorch: Instructions to install a PyTorch compatible with the CUDA on your GPUs (or without GPUs) can be found here: https://pytorch.org/get-started/locally.
