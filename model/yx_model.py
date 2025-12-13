@@ -49,7 +49,6 @@ class YXModel(nn.Module):
 
         # clinical feature fusion (US report feature)
         if opts.use_yx_clin:
-            self.clinical_param = nn.Parameter(torch.zeros(1, opts.yx_out_features))
             self.clinical_fc = nn.Linear(opts.yx_clin_features, opts.yx_out_features)
             self.clinical_image_attn = nn.MultiheadAttention(embed_dim=opts.yx_out_features, num_heads=1, dropout=opts.yx_dropout, batch_first=True)
 
@@ -157,8 +156,7 @@ class YXModel(nn.Module):
                 yx_clinical_feat = yx_clinical_feat.view(self.opts.batch_size, -1)
             clin_flag = batch["yx_clin_flag"].unsqueeze(dim=1).float() # (B, 1)
             clinical_feat = self.clinical_fc(yx_clinical_feat) # (B, C)
-            clin_syn_feat = self.clinical_param.repeat(clinical_feat.shape[0], 1) # (B, C) zero matrix, synthetic yx clinical feature when yx_flag=0
-            clinical_feat = clinical_feat * clin_flag + clin_syn_feat * (1.0 - clin_flag) # (B, C)
+            
 
             patient_from_lesions = self.parallel_clinical_img(patient_from_lesions, clinical_feat)
 
@@ -173,8 +171,7 @@ class YXModel(nn.Module):
                 yx_clinical_feat = yx_clinical_feat.view(self.opts.batch_size, -1)
             clin_flag = batch["yx_clin_flag"].unsqueeze(dim=1).float() # (B, 1)
             clinical_feat = self.clinical_fc(yx_clinical_feat) # (B, C)
-            clin_syn_feat = self.clinical_param.repeat(clinical_feat.shape[0], 1) # (B, C) zero matrix, synthetic yx clinical feature when yx_flag=0
-            clinical_feat = clinical_feat * clin_flag + clin_syn_feat * (1.0 - clin_flag) # (B, C)
+            
         
             if self.opts.feat_fusion_mode == "parallel":
                 patient_from_lesions = self.parallel_radiomics_clinical(patient_from_lesions, radiomics_feat, clinical_feat) 

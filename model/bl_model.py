@@ -48,7 +48,6 @@ class BLModel(nn.Module):
         ## radiomics feature fusion
         if self.opts.use_bl_rad:
             self.radiomics_fc = nn.Linear(opts.bl_omics_features, opts.bl_out_features)
-            self.radiomics_param = nn.Parameter(torch.zeros(1, opts.bl_out_features))
             self.radiomics_image_attn = nn.MultiheadAttention(embed_dim=opts.bl_out_features, num_heads=1, dropout=opts.bl_dropout, batch_first=True)
 
     def energy_function(self, x, weight_fn, need_attn=False):
@@ -124,9 +123,6 @@ class BLModel(nn.Module):
         if self.opts.use_bl_rad and not self.opts.use_bl_clin:
             rad_flag = batch["bl_rad_flag"].unsqueeze(dim=1).float() # (B, 1)
             radiomics_feat = self.radiomics_fc(batch["bl_radiomics_feat"]) # (B, M, C)
-            rad_syn_feat = self.radiomics_param.repeat(radiomics_feat.shape[0], 1) # synthetic bl radiomics feature
-            radiomics_feat = radiomics_feat * rad_flag + rad_syn_feat * (1.0 - rad_flag) # (B, C)
-
             image_from_bags = self.parallel_radiomics_img(image_from_bags, radiomics_feat)
 
         elif not self.opts.use_bl_rad and self.opts.use_bl_clin:
@@ -141,14 +137,6 @@ class BLModel(nn.Module):
         elif self.opts.use_bl_rad and self.opts.use_bl_clin:
             rad_flag = batch["bl_rad_flag"].unsqueeze(dim=1).float() # (B, 1)
             radiomics_feat = self.radiomics_fc(batch["bl_radiomics_feat"]) # (B, M, C)
-            rad_syn_feat = self.radiomics_param.repeat(radiomics_feat.shape[0], 1) # synthetic bl radiomics feature
-            radiomics_feat = radiomics_feat * rad_flag + rad_syn_feat * (1.0 - rad_flag) # (B, C)
-            
-            # clinical_feat = torch.stack([
-            #     self.clinical_embeddings["Molecularsubtype"](torch.tensor([self.clinical_attrs_tab['Molecularsubtype'].index(d) for d in batch["Molecularsubtype"]]).to(self.opts.device)) ,
-            #     self.clinical_embeddings["Clinicalstage"](torch.tensor([self.clinical_attrs_tab['Clinicalstage'].index(d) for d in batch["Clinicalstage"]]).to(self.opts.device)) ,
-            #     self.clinical_projectors["Age"](batch["Age"].unsqueeze(dim=1))
-            # ], dim=1)
             clinical_feat = self.clinical_fc(batch['bl_clinical_feat'])
             if self.opts.feat_fusion_mode == "parallel": # default
                 image_from_bags = self.parallel_radiomics_clinical(image_from_bags, radiomics_feat, clinical_feat)
