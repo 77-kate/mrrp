@@ -14,7 +14,8 @@ Installing PyTorch: Instructions to install a PyTorch compatible with the CUDA o
 
 ## Get started
 Below is a sample shell script for external validation:
-'''
+
+```
 #!/usr/bin/env bash
 modal='blyx'
 epochs=200
@@ -55,6 +56,7 @@ CUDA_VISIBLE_DEVICES=0 python main.py \
 --yx-clin-features $yx_clin_features \
 --yx-clin-file $yx_clin_file \
 --split-file $split_file \
+```
 
 
 '''
