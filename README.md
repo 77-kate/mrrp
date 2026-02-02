@@ -22,14 +22,14 @@ epochs=200
 intermodal_fusion="mumo"
 blyx_checkpoint='./ckp/model_last_epo200.pth' # the model checkpoint file, if you want to train the model from scratch, DO NOT pass this parameter
 
-bl_rad_file='path_to_your_WSI_radiomics_feature.pt' 
-bl_clin_file='path_to_your_WSI_clinical_feature.pt' 
+bl_rad_file='path_to_your_WSI_morphological_feature.pt' 
+bl_clin_file='path_to_your_WSI_topological_feature.pt' 
 bl_wsi_file='path_to_your_WSI_deep_feature.pt'
 
-yx_clin_features=1024 # dimension of your Ultra-Sound clinical feature
-yx_clin_file='path_to_your_US_clinical_feature.pt'
-yx_rad_file='path_to_your_US_radiomics_feature.csv' # we use Pyradiomics()
-yx_img_feat_dir='path_to_your_US_clinical_feature_folder'
+yx_clin_features=1024 # dimension of your Ultra-Sound clinical text feature
+yx_clin_file='path_to_your_US_clinical_text_feature.pt'
+yx_rad_file='path_to_your_US_omics_feature.csv' # We use Pyradiomics(https://pyradiomics.readthedocs.io/en/latest/#) to extract omics feature for US image
+yx_img_feat_dir='path_to_your_US_deep_feature_folder'
 
 split_file="path_to_your_data_splits"
 
@@ -56,8 +56,6 @@ CUDA_VISIBLE_DEVICES=0 python main.py \
 --yx-clin-features $yx_clin_features \
 --yx-clin-file $yx_clin_file \
 --split-file $split_file \
+
 ```
-
-
-'''
 
