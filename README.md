@@ -12,7 +12,7 @@ conda env create -f mrrp.yml
 ```
 Installing PyTorch: Instructions to install a PyTorch compatible with the CUDA on your GPUs (or without GPUs) can be found here: https://pytorch.org/get-started/locally.
 
-## Get started
+## Get Started
 Below is a sample shell script for external validation:
 
 ```
