@@ -13,14 +13,15 @@ conda env create -f mrrp.yml
 Installing PyTorch: Instructions to install a PyTorch compatible with the CUDA on your GPUs (or without GPUs) can be found here: https://pytorch.org/get-started/locally.
 
 ## Get Started
-Below is a sample shell script for external validation:
+We upload model weights to Google Drive (https://drive.google.com/file/d/1ofZ6O46Qcb6T4q3IG_5ZqS1F8YJI1sTm/view?usp=sharing). Below is a sample shell script for external validation:
 
 ```
 #!/usr/bin/env bash
 modal='blyx'
 epochs=200
 intermodal_fusion="mumo"
-blyx_checkpoint='./ckp/model_last_epo200.pth' # the model checkpoint file, if you want to train the model from scratch, DO NOT pass this parameter
+blyx_checkpoint='./ckp/model_last_epo200.pth'
+# You can download the model checkpoint file from Google Drive.if you want to train the model from scratch, DO NOT pass this parameter.
 
 bl_rad_file='path_to_your_WSI_morphological_feature.pt' 
 bl_clin_file='path_to_your_WSI_topological_feature.pt' 
